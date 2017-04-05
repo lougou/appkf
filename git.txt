@@ -1,0 +1,55 @@
+总结创建与合并分支命令
+
+查看分支：git branch
+
+创建分支：git branch name
+
+切换分支：git checkout name
+
+创建+切换分支：git checkout –b name
+
+合并某分支到当前分支：git merge name
+
+删除分支：git branch –d name
+
+ 3.分支管理策略。
+
+      通常合并分支时，git一般使用”Fast forward”模式，在这种模式下，删除分支后，会丢掉分支信息，现在我们来使用带参数 –no-ff来禁用”Fast forward”模式。首先我们来做demo演示下：
+
+创建一个dev分支。
+修改readme.txt内容。
+添加到暂存区。
+切换回主分支(master)。
+合并dev分支，使用命令 git merge –no-ff  -m “注释” dev
+查看历史记录
+
+分支策略：
+	首先master主分支应该是非常稳定的，也就是用来发布新版本，一般情况下不允许在上面干活，干活一般情况下在新建的dev分支上干活，干完后，比如上要发布，或者说dev分支代码稳定后可以合并到主分支master上来。
+
+会经常碰到bug问题，
+那么有了bug就需要修复，在Git中，每个bug都可以通过一个临时分支来修复，修复完成后，合并分支，然后将临时的分支删除掉。
+
+多人协作:
+
+当你从远程库克隆时候，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且远程库的默认名称是origin。
+
+要查看远程库的信息 使用 git remote
+要查看远程库的详细信息 使用 git remote –v
+
+推送分支：
+
+      推送分支就是把该分支上所有本地提交到远程库中，推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
+
+ 使用命令 git push origin master
+
+         1.master分支是主分支，因此要时刻与远程同步。
+         2.一些修复bug分支不需要推送到远程去，可以先合并到主分支上，然后把主分支master推送到远程去。
+多人协作工作模式一般是这样的：
+
+首先，可以试图用git push origin branch-name推送自己的修改.
+如果推送失败，则因为远程分支比你的本地更新早，需要先用git pull试图合并。
+如果合并有冲突，则需要解决冲突，并在本地提交。再用git push origin branch-name推送。
+
+
+
+
